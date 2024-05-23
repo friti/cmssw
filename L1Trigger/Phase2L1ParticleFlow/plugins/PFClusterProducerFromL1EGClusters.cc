@@ -81,7 +81,8 @@ void l1tpf::PFClusterProducerFromL1EGClusters::produce(edm::Event &iEvent, const
     if (corrector_.valid())
       corrector_.correctPt(cluster);
     cluster.setPtError(resol_(cluster.pt(), std::abs(cluster.eta())));
-    cluster.setHwQual(cryCl.hwQual());
+    unsigned int qual = ((digiCryCl.passes_iso() & digiCryCl.passes_ss()) << 2) | ((digiCryCl.passes_looseTkiso() & digiCryCl.passes_looseTkss()) << 1) | true;
+    cluster.setHwQual(qual);
     cluster.setDigiWord(digiCryCl.data().to_int());
     out->push_back(cluster);
     out->back().addConstituent(edm::Ptr<l1t::L1Candidate>(clusters, index));
@@ -100,7 +101,9 @@ void l1tpf::PFClusterProducerFromL1EGClusters::produce(edm::Event &iEvent, const
     if (corrector_.valid())
       corrector_.correctPt(cluster);
     cluster.setPtError(resol_(cluster.pt(), std::abs(cluster.eta())));
-    cluster.setHwQual((clusters->begin() + theIndex)->hwQual());
+    unsigned int qual = (digiCryCl.passes_iso() & digiCryCl.passes_ss()) | ((digiCryCl.passes_looseTkiso() & digiCryCl.passes_looseTkss()) << 1) | (true << 2);
+    cluster.setHwQual(qual);
+
     cluster.setDigiWord(digiCryCl.data().to_int());
     out_sel->push_back(cluster);
     out_sel->back().addConstituent(edm::Ptr<l1t::L1Candidate>(clusters, theIndex));
