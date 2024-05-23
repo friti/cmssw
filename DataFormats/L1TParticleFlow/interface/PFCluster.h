@@ -29,7 +29,8 @@ namespace l1t {
           hOverE_(hOverE),
           ptError_(ptError),
           absZBarycenter_(absZBarycenter),
-          sigmaRR_(sigmaRR) {
+          sigmaRR_(sigmaRR),
+          digiData_(0) {
       setPdgId(isEM ? 22 : 130);  // photon : non-photon(K0)
     }
     PFCluster(
@@ -76,12 +77,18 @@ namespace l1t {
     float egVsPUMVAOut() const { return egVsPUMVAOut_; }
     void setEgVsPUMVAOut(float egVsPUMVAOut) { egVsPUMVAOut_ = egVsPUMVAOut; }
 
+    uint64_t digiWord() const { return digiData_; }
+    void setDigiWord(uint64_t data) {
+      digiData_ = data;
+    }
+
   private:
     float hOverE_, ptError_, egVsPionMVAOut_, egVsPUMVAOut_;
     // HGC dedicated quantities (0ed by default)
     float absZBarycenter_, sigmaRR_;
 
     ConstituentsAndFractions constituents_;
+    uint64_t digiData_;
   };
 
   typedef std::vector<l1t::PFCluster> PFClusterCollection;
