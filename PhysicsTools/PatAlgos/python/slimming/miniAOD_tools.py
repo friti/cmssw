@@ -132,7 +132,7 @@ def miniAOD_customizeCommon(process):
     phase2_muon.toModify(process.selectedPatMuons, cut = "pt > 5 || isPFMuon || (pt > 3 && (isGlobalMuon || isStandAloneMuon || numberOfMatches > 0 || muonID('RPCMuLoose') || muonID('ME0MuonArbitrated') || muonID('GEMMuonArbitrated')) )")
     
     process.selectedPatElectrons.cut = cms.string("")
-    process.selectedPatTaus.cut = cms.string("pt > 18. && tauID('decayModeFindingNewDMs')> 0.5")
+    process.selectedPatTaus.cut = cms.string("pt > 5. && tauID('decayModeFindingNewDMs')> 0.5")
     process.selectedPatPhotons.cut = cms.string("")
 
     from PhysicsTools.PatAlgos.tools.jetTools import addJetCollection
