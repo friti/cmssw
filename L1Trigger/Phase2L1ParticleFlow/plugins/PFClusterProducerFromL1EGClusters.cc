@@ -83,7 +83,7 @@ void l1tpf::PFClusterProducerFromL1EGClusters::produce(edm::Event &iEvent, const
     cluster.setPtError(resol_(cluster.pt(), std::abs(cluster.eta())));
     unsigned int qual = ((digiCryCl.passes_iso() & digiCryCl.passes_ss()) << 2) | ((digiCryCl.passes_looseTkiso() & digiCryCl.passes_looseTkss()) << 1) | true;
     cluster.setHwQual(qual);
-    cluster.setDigiWord(digiCryCl.data().to_int());
+    cluster.setDigiWord(digiCryCl.data());
     out->push_back(cluster);
     out->back().addConstituent(edm::Ptr<l1t::L1Candidate>(clusters, index));
     selector.fill(cluster.pt(), cluster.eta(), cluster.phi(), index);
