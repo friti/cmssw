@@ -104,7 +104,7 @@ void l1tpf::PFClusterProducerFromL1EGClusters::produce(edm::Event &iEvent, const
     unsigned int qual = (digiCryCl.passes_iso() & digiCryCl.passes_ss()) | ((digiCryCl.passes_looseTkiso() & digiCryCl.passes_looseTkss()) << 1) | (true << 2);
     cluster.setHwQual(qual);
 
-    cluster.setDigiWord(digiCryCl.data().to_int());
+    cluster.setDigiWord(digiCryCl.data());
     out_sel->push_back(cluster);
     out_sel->back().addConstituent(edm::Ptr<l1t::L1Candidate>(clusters, theIndex));
   }
