@@ -4,6 +4,7 @@ import math
 
 from L1Trigger.Phase2L1ParticleFlow.l1tPFTracksFromL1Tracks_cfi import l1tPFTracksFromL1Tracks, l1tPFTracksFromL1TracksExtended
 from L1Trigger.Phase2L1ParticleFlow.l1tPFClustersFromL1EGClusters_cfi import l1tPFClustersFromL1EGClusters
+from L1Trigger.Phase2L1ParticleFlow.l1tPFClustersFromGCTPFClusters_cfi import l1tPFClustersFromGCTPFClusters
 from L1Trigger.Phase2L1ParticleFlow.pfClustersFromCombinedCalo_cff import l1tPFClustersFromCombinedCaloHCal, l1tPFClustersFromCombinedCaloHF
 from L1Trigger.Phase2L1ParticleFlow.l1tPFClustersFromHGC3DClusters_cfi import l1tPFClustersFromHGC3DClusters
 
@@ -13,7 +14,7 @@ l1tLayer1Barrel = cms.EDProducer("L1TCorrelatorLayer1Producer",
     tracks = cms.InputTag('l1tPFTracksFromL1Tracks'),
     muons = cms.InputTag('l1tSAMuonsGmt','prompt'),
     emClusters = cms.VInputTag(cms.InputTag('l1tPFClustersFromL1EGClusters:selected')),
-    hadClusters = cms.VInputTag(cms.InputTag('l1tPFClustersFromCombinedCaloHCal:calibrated')),
+    hadClusters = cms.VInputTag(cms.InputTag('l1tPFClustersFromGCTPFClusters:selected')),
     vtxCollection = cms.InputTag("l1tVertexFinderEmulator","L1VerticesEmulation"),
     nVtx = cms.int32(1),    
     emPtCut = cms.double(0.5),
@@ -534,6 +535,7 @@ l1tLayer1EGElliptic = cms.EDProducer(
 
 L1TLayer1TaskInputsTask = cms.Task(
     l1tPFClustersFromL1EGClusters,
+    l1tPFClustersFromGCTPFClusters,
     l1tPFClustersFromCombinedCaloHCal,
     l1tPFClustersFromCombinedCaloHF,
     l1tPFClustersFromHGC3DClusters,
