@@ -61,7 +61,7 @@ updatedJetsPuppiWithUserData = cms.EDProducer("PATJetUserDataEmbedder",
 
 finalJetsPuppi = cms.EDFilter("PATJetRefSelector",
     src = cms.InputTag("updatedJetsPuppiWithUserData"),
-    cut = cms.string("pt > 15")
+    cut = cms.string("pt > 5")
 )
 
 ##################### Tables for final output and docs ##########################
