@@ -125,14 +125,14 @@ def miniAOD_customizeCommon(process):
     process.patOOTPhotons.photonSource = cms.InputTag("reducedEgamma","reducedOOTPhotons")
     process.patOOTPhotons.electronSource = cms.InputTag("reducedEgamma","reducedGedGsfElectrons")
     #
-    process.selectedPatJets.cut = cms.string("pt > 10")
+    process.selectedPatJets.cut = cms.string("pt > 5")
     process.selectedPatMuons.cut = cms.string("pt > 5 || isPFMuon || (pt > 3 && (isGlobalMuon || isStandAloneMuon || numberOfMatches > 0 || muonID('RPCMuLoose')))")
     
     from Configuration.Eras.Modifier_phase2_muon_cff import phase2_muon
     phase2_muon.toModify(process.selectedPatMuons, cut = "pt > 5 || isPFMuon || (pt > 3 && (isGlobalMuon || isStandAloneMuon || numberOfMatches > 0 || muonID('RPCMuLoose') || muonID('ME0MuonArbitrated') || muonID('GEMMuonArbitrated')) )")
     
     process.selectedPatElectrons.cut = cms.string("")
-    process.selectedPatTaus.cut = cms.string("pt > 18. && tauID('decayModeFindingNewDMs')> 0.5")
+    process.selectedPatTaus.cut = cms.string("pt > 5. && tauID('decayModeFindingNewDMs')> 0.5")
     process.selectedPatPhotons.cut = cms.string("")
 
     from PhysicsTools.PatAlgos.tools.jetTools import addJetCollection
@@ -477,7 +477,7 @@ def miniAOD_customizeCommon(process):
     
     process.patJetsPuppi.jetChargeSource = cms.InputTag("patJetPuppiCharge")
 
-    process.selectedPatJetsPuppi.cut = cms.string("pt > 15")
+    process.selectedPatJetsPuppi.cut = cms.string("pt > 5")
 
     from PhysicsTools.PatAlgos.slimming.applyDeepBtagging_cff import applyDeepBtagging
     applyDeepBtagging( process )

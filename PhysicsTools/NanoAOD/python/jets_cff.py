@@ -186,7 +186,7 @@ run2_jme_2016.toModify(updatedJetsAK8WithUserData.userInts,
 
 finalJets = cms.EDFilter("PATJetRefSelector",
     src = cms.InputTag("updatedJetsWithUserData"),
-    cut = cms.string("pt > 15")
+    cut = cms.string("pt > 5")
 )
 
 finalJetsAK8 = cms.EDFilter("PATJetRefSelector",
@@ -592,7 +592,7 @@ jetMCTable = cms.EDProducer("SimpleCandidateFlatTableProducer",
 )
 genJetTable = cms.EDProducer("SimpleCandidateFlatTableProducer",
     src = cms.InputTag("slimmedGenJets"),
-    cut = cms.string("pt > 10"),
+    cut = cms.string("pt > 5"),
     name = cms.string("GenJet"),
     doc  = cms.string("slimmedGenJets, i.e. ak4 Jets made with visible genparticles"),
     singleton = cms.bool(False), # the number of entries is variable
