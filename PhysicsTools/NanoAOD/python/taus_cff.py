@@ -17,7 +17,7 @@ from RecoTauTag.RecoTau.tauIdWPsDefs import WORKING_POINTS_v2p5
 
 finalTaus = cms.EDFilter("PATTauRefSelector",
     src = cms.InputTag("slimmedTaus"),
-    cut = cms.string("pt > 18 && ((tauID('decayModeFindingNewDMs') > 0.5 && (tauID('byLooseCombinedIsolationDeltaBetaCorr3Hits') || (tauID('chargedIsoPtSumdR03')+max(0.,tauID('neutralIsoPtSumdR03')-0.072*tauID('puCorrPtSum'))<2.5) || tauID('byVVVLooseDeepTau2018v2p5VSjet'))) || (?isTauIDAvailable('byUTagCHSVSjetraw')?tauID('byUTagCHSVSjetraw'):-1) > {} || (?isTauIDAvailable('byUTagPUPPIVSjetraw')?tauID('byUTagPUPPIVSjetraw'):-1) > {})".format(0.05, 0.05))
+    cut = cms.string("pt > 5 && ((tauID('decayModeFindingNewDMs') > 0.5 && (tauID('byLooseCombinedIsolationDeltaBetaCorr3Hits') || (tauID('chargedIsoPtSumdR03')+max(0.,tauID('neutralIsoPtSumdR03')-0.072*tauID('puCorrPtSum'))<2.5) || tauID('byVVVLooseDeepTau2018v2p5VSjet'))) || (?isTauIDAvailable('byUTagCHSVSjetraw')?tauID('byUTagCHSVSjetraw'):-1) > {} || (?isTauIDAvailable('byUTagPUPPIVSjetraw')?tauID('byUTagPUPPIVSjetraw'):-1) > {})".format(0.05, 0.05))
 )
 
 ##################### Tables for final output and docs ##########################
@@ -165,7 +165,7 @@ genVisTaus = cms.EDProducer("GenVisTauProducer",
 
 genVisTauTable = simpleGenParticleFlatTableProducer.clone(
     src = cms.InputTag("genVisTaus"),
-    cut = cms.string("pt > 10."),
+    cut = cms.string("pt > 5."),
     name = cms.string("GenVisTau"),
     doc = cms.string("gen hadronic taus "),
     variables = cms.PSet(

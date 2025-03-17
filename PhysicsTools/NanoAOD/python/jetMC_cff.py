@@ -20,7 +20,7 @@ jetMCTable = simplePATJetFlatTableProducer.clone(
 )
 genJetTable = simpleGenJetFlatTableProducer.clone(
     src = cms.InputTag("slimmedGenJets"),
-    cut = cms.string("pt > 10"),
+    cut = cms.string("pt > 5"),
     name = cms.string("GenJet"),
     doc  = cms.string("slimmedGenJets, i.e. ak4 Jets made with visible genparticles"),
     variables = cms.PSet(P4Vars,

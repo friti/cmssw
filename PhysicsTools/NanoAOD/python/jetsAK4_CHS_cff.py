@@ -62,7 +62,7 @@ updatedJetsWithUserData = cms.EDProducer("PATJetUserDataEmbedder",
 
 finalJets = cms.EDFilter("PATJetRefSelector",
     src = cms.InputTag("updatedJetsWithUserData"),
-    cut = cms.string("pt > 15")
+    cut = cms.string("pt > 5")
 )
 
 
