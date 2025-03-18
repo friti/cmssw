@@ -94,6 +94,10 @@ private:
   float jet_phi;
   float jet_mass;
   unsigned int ijet;
+  std::vector<float> jet_pfcand_px;
+  std::vector<float> jet_pfcand_py;
+  std::vector<float> jet_pfcand_pz;
+  std::vector<float> jet_pfcand_energy;
   std::vector<float> jet_pfcand_pt_log;
   std::vector<float> jet_pfcand_energy_log;
   std::vector<float> jet_pfcand_deta;
@@ -137,6 +141,10 @@ private:
   std::vector<float> jet_pfcand_photon_r9;
   std::vector<float> jet_pfcand_photon_eVeto;
   std::vector<float> jet_pfcand_tau_signal;
+  std::vector<float> jet_sv_px;
+  std::vector<float> jet_sv_py;
+  std::vector<float> jet_sv_pz;
+  std::vector<float> jet_sv_energy;
   std::vector<float> jet_sv_pt_log;
   std::vector<float> jet_sv_mass;
   std::vector<float> jet_sv_deta;
@@ -148,6 +156,10 @@ private:
   std::vector<float> jet_sv_dxysig;
   std::vector<float> jet_sv_d3d;
   std::vector<float> jet_sv_d3dsig;
+  std::vector<float> jet_losttrack_px;
+  std::vector<float> jet_losttrack_py;
+  std::vector<float> jet_losttrack_pz;
+  std::vector<float> jet_losttrack_energy;
   std::vector<float> jet_losttrack_pt_log;
   std::vector<float> jet_losttrack_eta;
   std::vector<float> jet_losttrack_deta;
@@ -169,7 +181,11 @@ private:
   std::vector<float> jet_losttrack_nstriphits;
 };
 
-const std::vector<std::string> ParticleNetFeatureEvaluator::particle_features_{"jet_pfcand_pt_log",
+const std::vector<std::string> ParticleNetFeatureEvaluator::particle_features_{"jet_pfcand_px",
+    "jet_pfcand_py",
+    "jet_pfcand_pz",
+    "jet_pfcand_energy",
+    "jet_pfcand_pt_log",
                                                                                "jet_pfcand_energy_log",
                                                                                "jet_pfcand_deta",
                                                                                "jet_pfcand_dphi",
@@ -215,7 +231,11 @@ const std::vector<std::string> ParticleNetFeatureEvaluator::particle_features_{"
                                                                                "jet_pfcand_tau_signal",
                                                                                "pfcand_mask"};
 
-const std::vector<std::string> ParticleNetFeatureEvaluator::sv_features_{"jet_sv_pt_log",
+const std::vector<std::string> ParticleNetFeatureEvaluator::sv_features_{"jet_sv_px",
+    "jet_sv_py",
+    "jet_sv_pz",
+    "jet_sv_energy",
+    "jet_sv_pt_log",
                                                                          "jet_sv_mass",
                                                                          "jet_sv_deta",
                                                                          "jet_sv_dphi",
@@ -228,7 +248,11 @@ const std::vector<std::string> ParticleNetFeatureEvaluator::sv_features_{"jet_sv
                                                                          "jet_sv_d3dsig",
                                                                          "sv_mask"};
 
-const std::vector<std::string> ParticleNetFeatureEvaluator::losttrack_features_{"jet_losttrack_pt_log",
+const std::vector<std::string> ParticleNetFeatureEvaluator::losttrack_features_{"jet_losttrack_px",
+    "jet_losttrack_py",
+    "jet_losttrack_pz",
+    "jet_losttrack_energy",
+    "jet_losttrack_pt_log",
                                                                                 "jet_losttrack_eta",
                                                                                 "jet_losttrack_deta",
                                                                                 "jet_losttrack_dphi",
@@ -451,6 +475,10 @@ void ParticleNetFeatureEvaluator::fillParticleFeatures(DeepBoostedJetFeatures &f
 
     TVector3 cand_direction(candP3.x(), candP3.y(), candP3.z());
 
+    fts.fill("jet_pfcand_px", std::isnan(candP4.px()) ? 0 : candP4.px());
+    fts.fill("jet_pfcand_py", std::isnan(candP4.py()) ? 0 : candP4.py());
+    fts.fill("jet_pfcand_pz", std::isnan(candP4.pz()) ? 0 : candP4.pz());
+    fts.fill("jet_pfcand_energy", std::isnan(candP4.energy()) ? 0 : candP4.energy());
     fts.fill("jet_pfcand_pt_log", std::isnan(std::log(candP4.pt())) ? 0 : std::log(candP4.pt()));
     fts.fill("jet_pfcand_energy_log", std::isnan(std::log(candP4.energy())) ? 0 : std::log(candP4.energy()));
     fts.fill("jet_pfcand_eta", candP4.eta());
@@ -687,6 +715,10 @@ void ParticleNetFeatureEvaluator::fillSVFeatures(DeepBoostedJetFeatures &fts, co
   for (const auto *sv : jetSVs) {
     fts.fill("sv_mask", 1);
     fts.fill("jet_sv_pt_log", std::isnan(std::log(sv->pt())) ? 0 : std::log(sv->pt()));
+    fts.fill("jet_sv_px", sv->px());
+    fts.fill("jet_sv_py", sv->py());
+    fts.fill("jet_sv_pz", sv->pz());
+    fts.fill("jet_sv_energy", sv->energy());
     fts.fill("jet_sv_eta", sv->eta());
     fts.fill("jet_sv_mass", sv->mass());
     fts.fill("jet_sv_deta", sv->eta() - jet.eta());
@@ -736,6 +768,10 @@ void ParticleNetFeatureEvaluator::fillLostTrackFeatures(DeepBoostedJetFeatures &
   for (auto const &ltrack : jet_lost_tracks) {
     fts.fill("jet_losttrack_pt_log", std::isnan(std::log(ltrack.pt())) ? 0 : std::log(ltrack.pt()));
     fts.fill("jet_losttrack_eta", ltrack.eta());
+    fts.fill("jet_losttrack_px", ltrack.px());
+    fts.fill("jet_losttrack_py", ltrack.py());
+    fts.fill("jet_losttrack_pz", ltrack.pz());
+    fts.fill("jet_losttrack_energy", ltrack.energy());
     fts.fill("jet_losttrack_charge", ltrack.charge());
     fts.fill("jet_losttrack_frompv", ltrack.fromPV());
     fts.fill("jet_losttrack_dz", std::isnan(ltrack.dz(pv_ass_pos)) ? 0 : ltrack.dz(pv_ass_pos));
