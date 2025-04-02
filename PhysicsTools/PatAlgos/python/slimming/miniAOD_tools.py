@@ -101,7 +101,7 @@ def miniAOD_customizeCommon(process):
     process.patOOTPhotons.photonSource = cms.InputTag("reducedEgamma","reducedOOTPhotons")
     process.patOOTPhotons.electronSource = cms.InputTag("reducedEgamma","reducedGedGsfElectrons")
     #
-    process.selectedPatJets.cut = cms.string("pt > 15")
+    process.selectedPatJets.cut = cms.string("pt > 0") ## HERE
     process.selectedPatMuons.cut = cms.string("pt > 5 || isPFMuon || (pt > 3 && (isGlobalMuon || isStandAloneMuon || numberOfMatches > 0 || muonID('RPCMuLoose')))")
 
     from Configuration.Eras.Modifier_phase2_muon_cff import phase2_muon
@@ -114,7 +114,7 @@ def miniAOD_customizeCommon(process):
     ppRef_2024.toModify(process.selectedPatMuons, cut = "pt > 5 || isPFMuon || isTrackerMuon || (pt > 1.2 && (isGlobalMuon || isStandAloneMuon))")
 
     process.selectedPatElectrons.cut = cms.string("")
-    process.selectedPatTaus.cut = cms.string("pt > 18. && tauID('decayModeFindingNewDMs')> 0.5")
+    process.selectedPatTaus.cut = cms.string("pt > 5. && tauID('decayModeFindingNewDMs')> 0.5")
     process.selectedPatPhotons.cut = cms.string("")
 
     _dummyPatJets = process.selectedPatJets.clone(cut = "pt < 0")
@@ -160,7 +160,7 @@ def miniAOD_customizeCommon(process):
     runMetCorAndUncForMiniAODProduction(process,
                                         pfCandColl=cms.InputTag("noHFCands"),
                                         recoMetFromPFCs=True, #needed for HF removal
-                                        jetSelection="pt>15 && abs(eta)<3.",
+                                        jetSelection="pt>5 && abs(eta)<3.",
                                         postfix="NoHF"
                                         )
 
@@ -421,7 +421,7 @@ def miniAOD_customizeCommon(process):
         process.patJetsPuppi.userData.userFloats.src += [cms.InputTag("pileupJetIdPuppi:fullDiscriminant")]
         process.patJetsPuppi.userData.userInts.src += [cms.InputTag("pileupJetIdPuppi:fullId")]
 
-        process.selectedPatJetsPuppi.cut = cms.string("pt > 10")
+        process.selectedPatJetsPuppi.cut = cms.string("pt > 0") ## HERE
     
         from PhysicsTools.PatAlgos.slimming.applyDeepBtagging_cff import applyDeepBtagging
         applyDeepBtagging( process )
@@ -520,15 +520,15 @@ def miniAOD_customizeCommon(process):
                         src = noUpdatedTauName,
                         jetSource = jetCollection,
                         dRMax = 0.4,
-                        jetPtMin = 15,
+                        jetPtMin = 5,
                         jetEtaMax = 2.5,
                         UTagLabel = TagName,
                         UTagScoreNames = Discriminators,
                         tagPrefix = tag_prefix,
                         tauScoreMin = -1,
-                        vsJetMin = 0.05,
+                        vsJetMin = -1,
                         checkTauScoreIsBest = False,
-                        chargeAssignmentProbMin = 0.2,
+                        chargeAssignmentProbMin = -1,
                         addGenJetMatch = addGenJet,
                         genJetMatch = ''
                     ))
@@ -552,15 +552,15 @@ def miniAOD_customizeCommon(process):
                         src = noUpdatedTauName if not storePNetCHSjets else 'slimmedTausWithUTagCHS',
                         jetSource = jetCollection,
                         dRMax = 0.4,
-                        jetPtMin = 15,
+                        jetPtMin = 5,
                         jetEtaMax = 2.5,
                         UTagLabel = TagName,
                         UTagScoreNames = Discriminators,
                         tagPrefix = tag_prefix,
                         tauScoreMin = -1,
-                        vsJetMin = 0.05,
+                        vsJetMin = -1,
                         checkTauScoreIsBest = False,
-                        chargeAssignmentProbMin = 0.2,
+                        chargeAssignmentProbMin = -1,
                         addGenJetMatch = addGenJet,
                         genJetMatch = ''
                     ))
