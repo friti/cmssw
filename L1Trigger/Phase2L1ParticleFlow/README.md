@@ -20,7 +20,7 @@ Algorithm steps:
             - The EM cluster is now classified ad PF particle:
                 - If there are no associated tracks, the EM clusters is classified as a photon.
                 - if $p_T^{cluster} \ge \sum p_T^{track} -2 \sigma$, the tracks are tagged as electrons, and if $p_T^{cluster} - p_T^{track} \ge 1 \sigma$, the excess is classified as photon
-                - If $p_T^{cluster} <\ge> \sum p_T^{track} -2 \sigma$, the cluster is likely originating from a hadronic shower starting in EG calorimeter. This is then not saved at this step.
+                - If $p_T^{cluster} \ge \sum p_T^{track} -2 \sigma$, the cluster is likely originating from a hadronic shower starting in EG calorimeter. This is then not saved at this step.
         - The energy of linked EM clusters is [subtracted](https://github.com/p2l1pfp/cmssw/blob/L1PF_15_1_X/L1Trigger/Phase2L1ParticleFlow/src/pf/pfalgo3_ref.cpp#L244-L281) from the one of hadronic clusters. 
         - [Track- Hadronic Cluster Linking](https://github.com/p2l1pfp/cmssw/blob/L1PF_15_1_X/L1Trigger/Phase2L1ParticleFlow/src/pf/pfalgo3_ref.cpp#L411):
             - Tracks linked to closest hadronic cluster if $\Delta R<0.15$ and $p_T^{calo} \ge p_T^{track}-2\sigma_{calo}(p_T^{track})$
@@ -41,7 +41,7 @@ Within the coverage of the L1 track finder, PF delivers charged hadrons, neutral
     - If the [NNVtx track-to-vertex association is on](https://github.com/p2l1pfp/cmssw/blob/L1PF_15_1_X/L1Trigger/Phase2L1ParticleFlow/python/l1ctLayer1_cff.py#L12), the charged PF candidates are kept only if they are associated to the PV with the [MVS score](https://github.com/p2l1pfp/cmssw/blob/L1PF_15_1_X/L1Trigger/Phase2L1ParticleFlow/src/NNVtxAssoc.cc#L29)
 - For the [neutral PF candidates](https://github.com/p2l1pfp/cmssw/blob/L1PF_15_1_X/L1Trigger/Phase2L1ParticleFlow/src/puppi/linpuppi_ref.cpp#L691) a weight $w$ is computed:
     - First the metric $\alpha_C$ is computed, with a sum over all the tracks from the PV within a cone $\Delta R<0.3$ from the neutral particle candidate.
-        -$\alpha_C = log \sum \frac{min(p_T^i,p_T^{max})^2}{max(\Delta R, \Delta R^{min})^2}$  
+        - $\alpha_C = log \sum \frac{min(p_T^i,p_T^{max})^2}{max(\Delta R, \Delta R^{min})^2}$  
         - $p_T^{max} = 50 GeV$; \Delta R ^{min}=0.07 (0.04) in barrel (endcap)$
     - The final particle weight $w$ is computed combining $\alpha_c$ with the per-event pileup estimate
         - $w = \frac{1}{1+ e^{-x}}$
