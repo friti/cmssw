@@ -1327,7 +1327,9 @@ std::unique_ptr<l1t::PFCandidateCollection> L1TCorrelatorLayer1Producer::fetchPF
       ret->back().setHwTkQuality(p.hwTkQuality);
       ret->back().setCaloEta(reg.floatGlbEtaOf(p));
       ret->back().setCaloPhi(reg.floatGlbPhiOf(p));
-
+      ret->back().setIdProbPu(p.idProbPu);
+      ret->back().setIdProbEm(p.idProbEm);
+      ret->back().setIdProbPi(p.idProbPi);
       setRefs_(ret->back(), p);
     }
     for (const auto &p : event_.out[ir].pfneutral) {
@@ -1340,6 +1342,9 @@ std::unique_ptr<l1t::PFCandidateCollection> L1TCorrelatorLayer1Producer::fetchPF
       ret->back().setHwEmID(p.hwEmID);
       ret->back().setCaloEta(reg.floatGlbEtaOf(p));
       ret->back().setCaloPhi(reg.floatGlbPhiOf(p));
+      ret->back().setIdProbPu(p.idProbPu);
+      ret->back().setIdProbEm(p.idProbEm);
+      ret->back().setIdProbPi(p.idProbPi);
       setRefs_(ret->back(), p);
     }
   }
@@ -1380,6 +1385,7 @@ void L1TCorrelatorLayer1Producer::putPuppi(edm::Event &iEvent) const {
         coll->back().setHwZ0(p.hwZ0());
         coll->back().setHwDxy(p.hwDxy());
         coll->back().setHwTkQuality(p.hwTkQuality());
+        coll->back().setNnVtxScore(p.nnVtxScore);
       } else {
         coll->back().setHwPuppiWeight(p.hwPuppiW());
         coll->back().setHwEmID(p.hwEmID());

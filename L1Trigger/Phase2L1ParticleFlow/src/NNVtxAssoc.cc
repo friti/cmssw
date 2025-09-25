@@ -26,7 +26,7 @@ NNVtxAssoc::NNVtxAssoc(std::string AssociationGraphPath,
 }
 
 template <typename T>
-bool NNVtxAssoc::TTTrackNetworkSelector(const PFRegionEmu& region, const T& t, const l1ct::PVObjEmu& v) {
+bool NNVtxAssoc::TTTrackNetworkSelector(const PFRegionEmu& region, const T& t, const l1ct::PVObjEmu& v, float& score) {
   tensorflow::Tensor inputAssoc(tensorflow::DT_FLOAT, {1, 4});
   std::vector<tensorflow::Tensor> outputAssoc;
 
@@ -63,7 +63,7 @@ bool NNVtxAssoc::TTTrackNetworkSelector(const PFRegionEmu& region, const T& t, c
 
   double NNOutput = (double)outputAssoc[0].tensor<float, 2>()(0, 0);
   double NNOutput_exp = 1.0 / (1.0 + exp(-1.0 * (NNOutput)));
-
+  score = NNOutput_exp;
   return NNOutput_exp >= associationThreshold_;
 }
 
@@ -102,7 +102,9 @@ void NNVtxAssoc::NNVtxAssocDebug() {
 
 template bool NNVtxAssoc::TTTrackNetworkSelector<const l1ct::TkObjEmu>(const PFRegionEmu&,
                                                                        const l1ct::TkObjEmu&,
-                                                                       const l1ct::PVObjEmu&);
+                                                                       const l1ct::PVObjEmu&,
+                                                                       float& score);
 template bool NNVtxAssoc::TTTrackNetworkSelector<const l1ct::PFChargedObjEmu>(const PFRegionEmu&,
                                                                               const l1ct::PFChargedObjEmu&,
-                                                                              const l1ct::PVObjEmu&);
+                                                                              const l1ct::PVObjEmu&,
+                                                                              float& score);

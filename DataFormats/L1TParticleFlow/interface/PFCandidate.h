@@ -62,6 +62,15 @@ namespace l1t {
     uint16_t hwEmID() const { return hwEmID_; }
     uint64_t encodedPuppi64() const { return encodedPuppi64_; }
 
+    float idProbPu() const { return idProbPu_; }
+    void setIdProbPu(float prob) { idProbPu_ = prob; }
+    float idProbEm() const { return idProbEm_; }
+    void setIdProbEm(float prob) { idProbEm_ = prob; }
+    float idProbPi() const { return idProbPi_; }
+    void setIdProbPi(float prob) { idProbPi_ = prob; }
+    float nnVtxScore() const { return nnVtxScore_; }
+    void setNnVtxScore(float score) { nnVtxScore_ = score; }
+
     void setHwZ0(int16_t hwZ0) { hwZ0_ = hwZ0; }
     void setHwDxy(int16_t hwDxy) { hwDxy_ = hwDxy; }
     void setHwTkQuality(uint16_t hwTkQuality) { hwTkQuality_ = hwTkQuality; }
@@ -78,6 +87,11 @@ namespace l1t {
     int16_t hwZ0_, hwDxy_;
     uint16_t hwTkQuality_, hwPuppiWeight_, hwEmID_;
     uint64_t encodedPuppi64_;
+
+    float idProbPu_;
+    float idProbEm_;
+    float idProbPi_;
+    float nnVtxScore_;
 
     void setPdgIdFromParticleType(int charge, ParticleType kind);
   };

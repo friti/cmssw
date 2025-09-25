@@ -283,12 +283,13 @@ void l1ct::LinPuppiEmulator::linpuppi_chs_ref(const PFRegionEmu &region,
     int pZ0 = pfch[i].hwZ0;
     int z0diff = -99999;
     bool pass_network = false;
+    float nnvtx_score = -1;
     for (unsigned int j = 0; j < nVtx; ++j) {
       int pZ0Diff = pZ0 - pv[j].hwZ0;
       if (std::abs(z0diff) > std::abs(pZ0Diff))
         z0diff = pZ0Diff;
       if (useMLAssociation_ and withinCMSSW_ &&
-          nnVtxAssoc_->TTTrackNetworkSelector<const l1ct::PFChargedObjEmu>(region, pfch[i], pv[j]) == 1)
+          nnVtxAssoc_->TTTrackNetworkSelector<const l1ct::PFChargedObjEmu>(region, pfch[i], pv[j], nnvtx_score) == 1)
         pass_network = true;
     }
     bool accept = pfch[i].hwPt != 0;
@@ -298,6 +299,7 @@ void l1ct::LinPuppiEmulator::linpuppi_chs_ref(const PFRegionEmu &region,
       accept = accept && region.isFiducial(pfch[i]) && (pass_network || pfch[i].hwId.isMuon());
     if (accept) {
       outallch[i].fill(region, pfch[i]);
+      outallch[i].nnVtxScore = nnvtx_score;
       if (fakePuppi_) {                           // overwrite Dxy & TkQuality with debug information
         outallch[i].setHwDxy(dxy_t(pv[0].hwZ0));  ///hack to get this to work
         outallch[i].setHwTkQuality(region.isFiducial(pfch[i]) ? 1 : 0);
@@ -490,13 +492,14 @@ void l1ct::LinPuppiEmulator::linpuppi_ref(const PFRegionEmu &region,
 
       int pZMin = 99999;
       bool pass_network = false;
+      float nnvtx_score = -1;
       for (unsigned int v = 0; v < nVtx_; ++v) {
         if (v < pv.size()) {
           int ppZMin = std::abs(int(track[it].hwZ0 - pv[v].hwZ0));
           if (pZMin > ppZMin)
             pZMin = ppZMin;
           if (useMLAssociation_ and withinCMSSW_ &&
-              nnVtxAssoc_->TTTrackNetworkSelector<const l1ct::TkObjEmu>(region, track[it], pv[v]) == 1)
+              nnVtxAssoc_->TTTrackNetworkSelector<const l1ct::TkObjEmu>(region, track[it], pv[v], nnvtx_score) == 1)
             pass_network = true;
         }
       }
@@ -646,12 +649,13 @@ void l1ct::LinPuppiEmulator::linpuppi_flt(const PFRegionEmu &region,
 
       int pZMin = 99999;
       bool pass_network = false;
+      float nnvtx_score = -1;
       for (unsigned int v = 0, nVtx = std::min<unsigned int>(nVtx_, pv.size()); v < nVtx; ++v) {
         int ppZMin = std::abs(int(track[it].hwZ0 - pv[v].hwZ0));
         if (pZMin > ppZMin)
           pZMin = ppZMin;
         if (useMLAssociation_ and withinCMSSW_ &&
-            nnVtxAssoc_->TTTrackNetworkSelector<const l1ct::TkObjEmu>(region, track[it], pv[v]) == 1)
+            nnVtxAssoc_->TTTrackNetworkSelector<const l1ct::TkObjEmu>(region, track[it], pv[v], nnvtx_score) == 1)
           pass_network = true;
       }
       if (useMLAssociation_ && !pass_network)

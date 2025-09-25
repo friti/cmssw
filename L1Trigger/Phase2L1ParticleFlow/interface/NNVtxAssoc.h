@@ -32,7 +32,7 @@ public:
   static edm::ParameterSetDescription getParameterSetDescription();
 
   template <typename T>
-  bool TTTrackNetworkSelector(const PFRegionEmu& region, const T& t, const l1ct::PVObjEmu& v);
+  bool TTTrackNetworkSelector(const PFRegionEmu& region, const T& t, const l1ct::PVObjEmu& v, float& score);
 
 private:
   tensorflow::Session* associationSesh_;
