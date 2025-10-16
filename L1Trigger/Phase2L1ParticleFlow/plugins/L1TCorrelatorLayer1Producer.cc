@@ -1386,10 +1386,16 @@ void L1TCorrelatorLayer1Producer::putPuppi(edm::Event &iEvent) const {
         coll->back().setHwDxy(p.hwDxy());
         coll->back().setHwTkQuality(p.hwTkQuality());
         coll->back().setNnVtxScore(p.nnVtxScore);
+        coll->back().setAlpha(-1);
       } else {
         coll->back().setHwPuppiWeight(p.hwPuppiW());
         coll->back().setHwEmID(p.hwEmID());
+        coll->back().setAlpha(p.alpha);
+        coll->back().setNnVtxScore(-1);
       }
+      coll->back().setIdProbPu(-1);
+      coll->back().setIdProbEm(-1);
+      coll->back().setIdProbPi(-1);
       coll->back().setEncodedPuppi64(p.pack().to_uint64());
       setRefs_(coll->back(), p);
       nobj.push_back(coll->size() - 1);

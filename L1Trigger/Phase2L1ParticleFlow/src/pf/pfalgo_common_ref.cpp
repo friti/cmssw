@@ -139,6 +139,9 @@ void l1ct::PFAlgoEmulatorBase::fillPFCand(const TkObjEmu &track, PFChargedObjEmu
   }
   // extra emulator information
   pf.srcTrack = track.src;
+  pf.idProbPu = -1;
+  pf.idProbEm = -1;
+  pf.idProbPi = -1;
 }
 
 void l1ct::PFAlgoEmulatorBase::fillPFCand(const HadCaloObjEmu &calo, PFNeutralObjEmu &pf, bool isPhoton) const {
@@ -151,6 +154,10 @@ void l1ct::PFAlgoEmulatorBase::fillPFCand(const HadCaloObjEmu &calo, PFNeutralOb
   pf.hwPUID = 0;
   // extra emulator information
   pf.srcCluster = calo.src;
+  pf.idProbPu = -1;
+  pf.idProbEm = -1;
+  pf.idProbPi = -1;
+
 }
 
 void l1ct::PFAlgoEmulatorBase::fillPFCand(const EmCaloObjEmu &calo, PFNeutralObjEmu &pf, bool isPhoton) const {
@@ -163,4 +170,8 @@ void l1ct::PFAlgoEmulatorBase::fillPFCand(const EmCaloObjEmu &calo, PFNeutralObj
   pf.hwPUID = 0;
   // more emulator info
   pf.srcCluster = calo.src;
+  pf.idProbPu = -1;
+  pf.idProbEm = -1;
+  pf.idProbPi = -1;
+
 }

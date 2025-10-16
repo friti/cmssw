@@ -238,13 +238,14 @@ void l1ct::PFAlgo2HGCEmulator::run(const PFInputRegion& in, OutputRegion& out) c
     if (in.track[it].hwPt > 0 && track_good[it]) {
       fillPFCand(in.track[it], out.pfcharged[it], /*isMu=*/(iMu[it] != -1), isEle[it]);
       // extra emulator information
-      if (tk2calo[it] != -1)
+      if (tk2calo[it] != -1) {
         out.pfcharged[it].srcCluster = in.hadcalo[tk2calo[it]].src;
+        out.pfcharged[it].idProbPu = in.hadcalo[tk2calo[it]].hwPuProb().to_float();
+        out.pfcharged[it].idProbPi = in.hadcalo[tk2calo[it]].hwPiProb.to_float();
+        out.pfcharged[it].idProbEm = in.hadcalo[tk2calo[it]].hwEmProb.to_float();
+      }
       if (iMu[it] != -1)
         out.pfcharged[it].srcMu = in.muon[iMu[it]].src;
-      out.pfcharged[it].idProbPu = in.hadcalo[tk2calo[it]].hwPuProb().to_float();
-      out.pfcharged[it].idProbEm = in.hadcalo[tk2calo[it]].hwEmProb.to_float();
-      out.pfcharged[it].idProbPi = in.hadcalo[tk2calo[it]].hwPiProb.to_float();
       // out.pfcharged[it].nnVtxScore = in.track[it];
     }
   }

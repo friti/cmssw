@@ -70,6 +70,8 @@ namespace l1t {
     void setIdProbPi(float prob) { idProbPi_ = prob; }
     float nnVtxScore() const { return nnVtxScore_; }
     void setNnVtxScore(float score) { nnVtxScore_ = score; }
+    float alpha() const { return alpha_; }
+    void setAlpha(float alpha) { alpha_ = alpha; }
 
     void setHwZ0(int16_t hwZ0) { hwZ0_ = hwZ0; }
     void setHwDxy(int16_t hwDxy) { hwDxy_ = hwDxy; }
@@ -92,6 +94,7 @@ namespace l1t {
     float idProbEm_;
     float idProbPi_;
     float nnVtxScore_;
+    float alpha_;
 
     void setPdgIdFromParticleType(int charge, ParticleType kind);
   };

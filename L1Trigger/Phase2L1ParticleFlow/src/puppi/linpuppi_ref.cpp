@@ -532,6 +532,7 @@ void l1ct::LinPuppiEmulator::linpuppi_ref(const PFRegionEmu &region,
     std::pair<pt_t, puppiWgt_t> ptAndW = sum2puppiPt_ref(sum, pfallne[in].hwPt, ieta, isEM, in);
     if (!fakePuppi_) {
       outallne_nocut[in].fill(region, pfallne[in], ptAndW.first, ptAndW.second);
+      outallne_nocut[in].alpha = log2(sum.to_float());
       if (region.isFiducial(pfallne[in]) && outallne_nocut[in].hwPt >= ptCut_[ieta]) {
         outallne[in] = outallne_nocut[in];
       }
