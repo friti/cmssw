@@ -143,6 +143,8 @@ namespace l1ct {
     float idProbPi;
     float nnVtxScore;
     float alpha;
+    float pfpuppiweight;
+
 
     bool read(std::fstream &from);
     bool write(std::fstream &to) const;
@@ -157,6 +159,7 @@ namespace l1ct {
       idProbPi = 0;
       nnVtxScore = 0;
       alpha = 0;
+      pfpuppiweight = 0;
     }
     inline void fill(const PFRegionEmu &region, const PFChargedObjEmu &src) {
       PuppiObj::fill(region, src);

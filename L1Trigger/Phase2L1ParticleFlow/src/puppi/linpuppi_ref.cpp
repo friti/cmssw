@@ -533,6 +533,8 @@ void l1ct::LinPuppiEmulator::linpuppi_ref(const PFRegionEmu &region,
     if (!fakePuppi_) {
       outallne_nocut[in].fill(region, pfallne[in], ptAndW.first, ptAndW.second);
       outallne_nocut[in].alpha = log2(sum.to_float());
+      outallne_nocut[in].pfpuppiweight = ptAndW.second.to_float();
+      std::cout << "Inside pt " << pfallne[in].floatPt() << " alpha: " << outallne_nocut[in].alpha << " Puppi weight: " << ptAndW.second.to_float() << std::endl;
       if (region.isFiducial(pfallne[in]) && outallne_nocut[in].hwPt >= ptCut_[ieta]) {
         outallne[in] = outallne_nocut[in];
       }

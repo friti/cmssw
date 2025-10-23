@@ -42,8 +42,7 @@ namespace l1t {
     const MuonRef& muon() const { return muonRef_; }
     void setMuon(const MuonRef& ref) { muonRef_ = ref; }
 
-    /// PUPPI weight (-1 if not available)
-    float puppiWeight() const { return puppiWeight_; }
+
 
     void setZ0(float z0) { setVertex(reco::Particle::Point(0, 0, z0)); }
     void setDxy(float dxy) { dxy_ = dxy; }
@@ -72,6 +71,11 @@ namespace l1t {
     void setNnVtxScore(float score) { nnVtxScore_ = score; }
     float alpha() const { return alpha_; }
     void setAlpha(float alpha) { alpha_ = alpha; }
+    /// PUPPI weight (-1 if not available)
+    float puppiWeight() const { return puppiWeight_; }
+
+    float pfpuppiweight() const { return pfpuppiweight_; }
+    void setPFpuppiWeight(float weight) { pfpuppiweight_ = weight; }
 
     void setHwZ0(int16_t hwZ0) { hwZ0_ = hwZ0; }
     void setHwDxy(int16_t hwDxy) { hwDxy_ = hwDxy; }
@@ -95,6 +99,7 @@ namespace l1t {
     float idProbPi_;
     float nnVtxScore_;
     float alpha_;
+    float pfpuppiweight_;
 
     void setPdgIdFromParticleType(int charge, ParticleType kind);
   };

@@ -1387,10 +1387,14 @@ void L1TCorrelatorLayer1Producer::putPuppi(edm::Event &iEvent) const {
         coll->back().setHwTkQuality(p.hwTkQuality());
         coll->back().setNnVtxScore(p.nnVtxScore);
         coll->back().setAlpha(-1);
+        coll->back().setPFpuppiWeight(-1);
+
       } else {
         coll->back().setHwPuppiWeight(p.hwPuppiW());
         coll->back().setHwEmID(p.hwEmID());
         coll->back().setAlpha(p.alpha);
+        coll->back().setPFpuppiWeight(p.pfpuppiweight);
+        std::cout << "PF candidate pt " << p.floatPt() << " pf cand charge " << p.intCharge() << " alpha: " << p.alpha << " float puppiweight: " << p.floatPuppiW() << " Puppi weight: " << p.pfpuppiweight << std::endl;
         coll->back().setNnVtxScore(-1);
       }
       coll->back().setIdProbPu(-1);
